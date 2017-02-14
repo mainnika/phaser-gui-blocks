@@ -7,6 +7,7 @@ export { Modal }
 
 class Modal extends Component {
 
+	private visible: boolean;
 	private raw: Phaser.Group;
 	private owner: Gui;
 
@@ -35,15 +36,25 @@ class Modal extends Component {
 
 	public show(): void {
 
+		if (this.visible) {
+			this.hide();
+		}
+
 		this.owner.compile(this.content, this.raw, this);
+		this.visible = true;
 	}
 
 	public hide(): void {
 
 		this.raw.removeAll(true);
+		this.visible = false;
 	}
 
 	public debug(gui: Gui, callback: (...args: any[]) => void): void {
+
+		if (!this.visible) {
+			return;
+		}
 
 		gui.debug(this.content || []);
 	}
