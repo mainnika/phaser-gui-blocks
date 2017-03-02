@@ -41,6 +41,10 @@ class Image extends Component {
 		game.load.image(this.image.url, this.image.url);
 	}
 
+	public update(gui: Gui, game: Phaser.Game): void {
+		//
+	}
+
 	public debug(gui: Gui, callback: (...args: any[]) => void): void {
 
 		this.raw.inputEnabled = true;
