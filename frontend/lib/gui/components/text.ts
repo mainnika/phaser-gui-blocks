@@ -38,8 +38,11 @@ class Text extends Component {
 	}
 
 	public preload(gui: Gui, game: Phaser.Game): void {
-
 		// nothing
+	}
+
+	public update(gui: Gui, game: Phaser.Game): void {
+		//
 	}
 
 	public debug(gui: Gui, callback: (...args: any[]) => void): void {

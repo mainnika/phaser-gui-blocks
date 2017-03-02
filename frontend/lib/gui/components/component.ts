@@ -26,5 +26,6 @@ abstract class Component {
 
 	public abstract compile(gui: Gui, parent: Phaser.Group, root: Gui | Component): void;
 	public abstract preload(gui: Gui, game: Phaser.Game): void;
+	public abstract update(gui: Gui, game: Phaser.Game): void;
 	public abstract debug(gui: Gui, callback: (...args: any[]) => void): void;
 }

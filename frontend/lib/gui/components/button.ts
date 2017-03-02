@@ -44,6 +44,10 @@ class Button extends Component {
 		game.load.spritesheet(this.button.url, this.button.url, this.button.width, this.button.height, 3);
 	}
 
+	public update(gui: Gui, game: Phaser.Game): void {
+		//
+	}
+
 	public debug(gui: Gui, callback: (...args: any[]) => void): void {
 
 		this.raw.onInputUp.removeAll();

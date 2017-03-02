@@ -31,6 +31,11 @@ class Group extends Component {
 		gui.preload(game, this.content, gui);
 	}
 
+	public update(gui: Gui, game: Phaser.Game): void {
+
+		gui.update(game, this.group.content);
+	}
+
 	public debug(gui: Gui, callback: (...args: any[]) => void): void {
 
 		gui.debug(this.content || []);

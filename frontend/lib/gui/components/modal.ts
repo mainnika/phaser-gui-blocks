@@ -34,6 +34,15 @@ class Modal extends Component {
 		gui.preload(game, this.content, gui);
 	}
 
+	public update(gui: Gui, game: Phaser.Game): void {
+
+		if (!this.visible) {
+			return;
+		}
+
+		gui.update(game, this.content);
+	}
+
 	public show(): void {
 
 		if (this.visible) {

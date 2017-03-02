@@ -35,8 +35,11 @@ class Gui extends Phaser.State {
 		new Group(this.root).compile(this);
 	}
 
-	public update(): void {
-		//
+	public update(game?: Phaser.Game, components?: Component[], gui?: Gui): void {
+
+		for (let component of components || this.root) {
+			component.update(gui || this, game || this.game);
+		}
 	}
 
 	public compile(components: Component[], parent: Phaser.Group, root: Gui | Component): void {
@@ -54,4 +57,3 @@ class Gui extends Phaser.State {
 		}
 	}
 }
-
