@@ -7,3 +7,4 @@ export * from './image';
 export * from './text';
 export * from './modal';
 export * from './audio';
+export * from './fabric';
