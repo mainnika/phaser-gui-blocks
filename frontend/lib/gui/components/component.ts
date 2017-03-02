@@ -10,16 +10,19 @@ interface IComponent {
 
 abstract class Component {
 
-	private id: string | undefined;
-
-	public constructor(component: IComponent) {
-
-		this.id = component.id;
+	public constructor(
+		private component: IComponent,
+	) {
 	}
 
 	public get Id(): string {
 
-		return this.id;
+		return this.component.id;
+	}
+
+	public get Component(): IComponent {
+
+		return this.component;
 	}
 
 	public abstract get Raw(): any;
