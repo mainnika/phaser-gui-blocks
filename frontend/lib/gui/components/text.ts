@@ -13,6 +13,8 @@ interface IText {
 		font?: string;
 		fill?: string;
 		align?: string;
+		boundsAlignH?: string;
+		boundsAlignV?: string;
 	};
 }
 
