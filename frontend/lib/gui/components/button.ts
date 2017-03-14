@@ -31,7 +31,7 @@ class Button extends Component {
 		return this.raw;
 	}
 
-	public create(gui: Gui, parent: Phaser.Group): void {
+	public compile(gui: Gui, parent: Phaser.Group): void {
 
 		const handler: Function | undefined = this.button.click ? this.button.click.bind(this.button.ctx || gui) : undefined;
 		const key: string = this.button.url;
@@ -39,7 +39,7 @@ class Button extends Component {
 		parent.add(this.raw = gui.add.button(this.button.x, this.button.y, key, handler, undefined, 1, 0, 2, 0));
 	}
 
-	public load(gui: Gui, game: Phaser.Game): void {
+	public preload(gui: Gui, game: Phaser.Game): void {
 
 		game.load.spritesheet(this.button.url, this.button.url, this.button.width, this.button.height, 3);
 	}

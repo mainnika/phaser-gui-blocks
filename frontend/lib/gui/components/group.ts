@@ -3,21 +3,17 @@
 import { Gui } from '../gui';
 import { Component } from './component';
 
-export { Group, IGroup }
-
-interface IGroup {
-	include?: Component[];
-}
+export { Group }
 
 class Group extends Component {
 
 	private raw: Phaser.Group;
 
 	constructor(
-		private group: IGroup,
+		private content: Component[],
 	) {
 
-		super(group);
+		super(content);
 	}
 
 	public get Raw(): Phaser.Group {
@@ -25,19 +21,13 @@ class Group extends Component {
 		return this.raw;
 	}
 
-	public create(gui: Gui, parent?: Phaser.Group): void {
+	public compile(gui: Gui, parent?: Phaser.Group): void {
 
-		this.raw = gui.add.group(parent);
-
-		if (Array.isArray(this.group.include)) {
-			gui.compile(this.group.include, this.raw);
-		}
+		gui.compile(this.content, this.raw = gui.add.group(parent));
 	}
 
-	public load(gui: Gui, game: Phaser.Game): void {
+	public preload(gui: Gui, game: Phaser.Game): void {
 
-		if (Array.isArray(this.group.include)) {
-			gui.preload(game, this.group.include, gui);
-		}
+		gui.preload(game, this.content, gui);
 	}
 }
