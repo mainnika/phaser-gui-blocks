@@ -24,6 +24,6 @@ abstract class Component {
 
 	public abstract get Raw(): any;
 
-	public abstract compile(gui: Gui, parent: Phaser.Group): void;
+	public abstract compile(gui: Gui, parent: Phaser.Group, root: Gui | Component): void;
 	public abstract preload(gui: Gui, game: Phaser.Game): void;
 }

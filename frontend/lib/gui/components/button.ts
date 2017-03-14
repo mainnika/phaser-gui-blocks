@@ -31,9 +31,9 @@ class Button extends Component {
 		return this.raw;
 	}
 
-	public compile(gui: Gui, parent: Phaser.Group): void {
+	public compile(gui: Gui, parent: Phaser.Group, root: Gui | Component): void {
 
-		const handler: Function | undefined = this.button.click ? this.button.click.bind(this.button.ctx || gui) : undefined;
+		const handler: Function | undefined = this.button.click ? this.button.click.bind(this.button.ctx || root) : undefined;
 		const key: string = this.button.url;
 
 		parent.add(this.raw = gui.add.button(this.button.x, this.button.y, key, handler, undefined, 1, 0, 2, 0));

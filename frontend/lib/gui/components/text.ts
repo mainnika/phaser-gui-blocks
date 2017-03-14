@@ -32,7 +32,7 @@ class Text extends Component {
 		return this.raw;
 	}
 
-	public compile(gui: Gui, parent: Phaser.Group): void {
+	public compile(gui: Gui, parent: Phaser.Group, root?: Gui | Component): void {
 
 		parent.add(this.raw = gui.add.text(this.text.x, this.text.y, this.text.text, this.text.style));
 	}

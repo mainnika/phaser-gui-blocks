@@ -34,10 +34,10 @@ class Gui extends Phaser.State {
 		//
 	}
 
-	public compile(components: Component[], parent: Phaser.Group): void {
+	public compile(components: Component[], parent: Phaser.Group, root: Gui | Component): void {
 
 		for (let component of components) {
-			component.compile(this, parent);
+			component.compile(this, parent, root);
 			this.raws[component.Id || String(Math.random())] = component;
 		}
 	}

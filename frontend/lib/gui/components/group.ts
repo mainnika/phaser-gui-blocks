@@ -21,9 +21,9 @@ class Group extends Component {
 		return this.raw;
 	}
 
-	public compile(gui: Gui, parent?: Phaser.Group): void {
+	public compile(gui: Gui, parent?: Phaser.Group, root?: Gui | Component): void {
 
-		gui.compile(this.content, this.raw = gui.add.group(parent));
+		gui.compile(this.content, this.raw = gui.add.group(parent), root || gui);
 	}
 
 	public preload(gui: Gui, game: Phaser.Game): void {

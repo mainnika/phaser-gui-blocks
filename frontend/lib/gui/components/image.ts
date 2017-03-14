@@ -29,7 +29,7 @@ class Image extends Component {
 		return this.raw;
 	}
 
-	public compile(gui: Gui, parent: Phaser.Group): void {
+	public compile(gui: Gui, parent: Phaser.Group, root?: Gui | Component): void {
 
 		const key: string = this.image.url;
 
