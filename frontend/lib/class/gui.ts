@@ -23,14 +23,36 @@ interface IGroup extends IComponent {
 	include?: Component[];
 }
 
+interface IText extends IComponent {
+	type: Type.Text | 'Text';
+	x?: number;
+	y?: number;
+	text?: string;
+	style?: {
+		font?: string;
+		fill?: string;
+		align?: string;
+	};
+}
+
+interface IImage extends IComponent {
+	type: Type.Image | 'Image';
+	x?: number;
+	y?: number;
+	url?: string;
+}
+
 type Component =
 	| IButton
-	| IGroup;
+	| IText
+	| IGroup
+	| IImage;
 
 enum Type {
 	Button,
 	Text,
 	Group,
+	Image,
 }
 
 class State extends Phaser.State {
@@ -82,6 +104,16 @@ class State extends Phaser.State {
 					this.button(component as IButton, parent);
 					break;
 
+				case Type.Text:
+				case Type[Type.Text]:
+					this.text(component as IText, parent);
+					break;
+
+				case Type.Image:
+				case Type[Type.Image]:
+					this.image(component as IImage, parent);
+					break;
+
 				default:
 					throw new Error(`invalid component type`);
 			}
@@ -118,6 +150,36 @@ class State extends Phaser.State {
 		}
 
 		const element: Phaser.Button = this.raws[id] = this.add.button(button.x, button.y, key, handler);
+
+		parent.add(element);
+
+		return element;
+	}
+
+	private text(text: IText, parent: Phaser.Group): Phaser.Text {
+
+		const id: string = text.id || String(Math.random());
+
+		if (this.raws[id]) {
+			throw new Error(`couldnt compile gui, element already exists, ${id}`);
+		}
+
+		const element: Phaser.Text = this.raws[id] = this.add.text(text.x, text.y, text.text, text.style);
+
+		parent.add(element);
+
+		return element;
+	}
+
+	private image(image: IImage, parent: Phaser.Group): Phaser.Image {
+
+		const id: string = image.id || String(Math.random());
+
+		if (this.raws[id]) {
+			throw new Error(`couldnt compile gui, element already exists, ${id}`);
+		}
+
+		const element: Phaser.Image = this.raws[id] = this.add.image(image.x, image.y, image.url);
 
 		parent.add(element);
 

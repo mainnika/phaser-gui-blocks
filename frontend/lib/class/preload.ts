@@ -1,6 +1,6 @@
 'use strict';
 
-export { Preload, Spritesheet }
+export { Preload, Spritesheet, Image }
 
 abstract class Preload {
 
@@ -22,5 +22,20 @@ class Spritesheet extends Preload {
 	public preload(state: Phaser.State): void {
 
 		state.load.spritesheet(this.url, this.url, this.width, this.height, this.max);
+	}
+}
+
+class Image extends Preload {
+
+	constructor(
+		public url: string,
+	) {
+
+		super();
+	}
+
+	public preload(state: Phaser.State): void {
+
+		state.load.image(this.url, this.url);
 	}
 }
