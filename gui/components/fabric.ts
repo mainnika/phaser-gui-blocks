@@ -29,8 +29,9 @@ class Fabric<T extends Component> extends Component {
 
 		let template: T = this.fabric.template;
 		let templateCtr: any = (template as Object).constructor;
+		let templateProps: any = Phaser.Utils.extend(true, {}, template.Component);
 
-		let constructed: T = new templateCtr(template.Component);
+		let constructed: T = new templateCtr(templateProps);
 
 		constructed.preload(this.gui, this.game);
 		constructed.compile(this.gui, this.parent, this.root);
@@ -40,7 +41,7 @@ class Fabric<T extends Component> extends Component {
 		return constructed;
 	}
 
-	public get Raw(): any {
+	public get Raw(): T {
 
 		return this.fabric.template;
 	}
