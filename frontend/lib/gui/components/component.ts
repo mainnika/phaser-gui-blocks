@@ -12,7 +12,7 @@ abstract class Component {
 
 	private id: string | undefined;
 
-	constructor(component: IComponent) {
+	public constructor(component: IComponent) {
 
 		this.id = component.id;
 	}

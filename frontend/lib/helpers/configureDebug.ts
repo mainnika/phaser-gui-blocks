@@ -2,13 +2,13 @@
 
 import * as debug from 'debug';
 
-function customFormatArgsFactory(debugModule: debug.IDebug): (...args: any[]) => any[] {
+const customFormatArgsFactory = (debugModule: debug.IDebug): (...args: any[]) => any[] => {
 
 	// tslint:disable-next-line:no-string-literal
 	const moduleFormatArgs: any = debugModule['formatArgs'];
 
 	/* tslint:disable:no-invalid-this */
-	const customFormatArgs: any = function (args: any[]): any[] {
+	const customFormatArgs: any = (args: any[]): any[] => {
 
 		if (this.useColors) {
 			moduleFormatArgs.call(this, args);
@@ -40,9 +40,9 @@ function customFormatArgsFactory(debugModule: debug.IDebug): (...args: any[]) =>
 	);
 
 	return customFormatArgs;
-}
+};
 
-function configureDebug(debugModule: debug.IDebug): debug.IDebug {
+const configureDebug = (debugModule: debug.IDebug): debug.IDebug => {
 
 	// tslint:disable-next-line:no-string-literal
 	if (debugModule['formatArgs'] && debugModule['formatArgs'].customized) {
@@ -53,6 +53,6 @@ function configureDebug(debugModule: debug.IDebug): debug.IDebug {
 	debugModule['formatArgs'] = customFormatArgsFactory(debugModule);
 
 	return debugModule;
-}
+};
 
 export { configureDebug }

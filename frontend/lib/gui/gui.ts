@@ -13,7 +13,7 @@ class Gui extends Phaser.State {
 
 	private raws: { [id: string]: Component };
 
-	constructor(
+	public constructor(
 		private root: Component[],
 	) {
 

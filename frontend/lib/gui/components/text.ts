@@ -20,7 +20,7 @@ class Text extends Component {
 
 	private raw: Phaser.Text;
 
-	constructor(
+	public constructor(
 		private text: IText,
 	) {
 

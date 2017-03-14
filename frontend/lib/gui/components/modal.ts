@@ -11,7 +11,7 @@ class Modal extends Component {
 	private raw: Phaser.Group;
 	private owner: Gui;
 
-	constructor(
+	public constructor(
 		private content: Component[],
 	) {
 

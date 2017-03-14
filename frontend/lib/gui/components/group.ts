@@ -9,7 +9,7 @@ class Group extends Component {
 
 	private raw: Phaser.Group;
 
-	constructor(
+	public constructor(
 		private content: Component[],
 	) {
 

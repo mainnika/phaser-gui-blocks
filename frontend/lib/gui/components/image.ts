@@ -17,7 +17,7 @@ class Image extends Component {
 
 	private raw: Phaser.Image;
 
-	constructor(
+	public constructor(
 		private image: IImage,
 	) {
 

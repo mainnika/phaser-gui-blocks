@@ -19,7 +19,7 @@ class Button extends Component {
 
 	private raw: Phaser.Button;
 
-	constructor(
+	public constructor(
 		private button: IButton,
 	) {
 
