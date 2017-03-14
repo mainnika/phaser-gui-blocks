@@ -41,4 +41,12 @@ class Text extends Component {
 
 		// nothing
 	}
+
+	public debug(gui: Gui, callback: (...args: any[]) => void): void {
+
+		this.raw.inputEnabled = true;
+		this.raw.input.enableDrag(false);
+
+		this.raw.events.onDragStop.add(() => callback(this, this.raw.position.x, this.raw.position.y));
+	}
 }

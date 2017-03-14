@@ -1,10 +1,15 @@
 'use strict';
 
+import * as debug from 'debug';
+
+import { configureDebug } from '../helpers/configureDebug';
 import { Component, Group } from './components';
 
 export { Gui };
 
 class Gui extends Phaser.State {
+
+	private static D: debug.IDebugger = configureDebug(debug)('Gui');
 
 	private raws: { [id: string]: Component };
 
@@ -39,6 +44,13 @@ class Gui extends Phaser.State {
 		for (let component of components) {
 			component.compile(this, parent, root);
 			this.raws[component.Id || String(Math.random())] = component;
+		}
+	}
+
+	public debug(components?: Component[]): void {
+
+		for (let component of components || this.root) {
+			component.debug(this, (...args: any[]): void => Gui.D(`Debug component %o`, args));
 		}
 	}
 }

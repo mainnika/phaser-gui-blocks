@@ -42,4 +42,9 @@ class Modal extends Component {
 
 		this.raw.removeAll(true);
 	}
+
+	public debug(gui: Gui, callback: (...args: any[]) => void): void {
+
+		gui.debug(this.content || []);
+	}
 }

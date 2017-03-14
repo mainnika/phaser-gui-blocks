@@ -43,4 +43,14 @@ class Button extends Component {
 
 		game.load.spritesheet(this.button.url, this.button.url, this.button.width, this.button.height, 3);
 	}
+
+	public debug(gui: Gui, callback: (...args: any[]) => void): void {
+
+		this.raw.onInputUp.removeAll();
+
+		this.raw.inputEnabled = true;
+		this.raw.input.enableDrag(false);
+
+		this.raw.events.onDragStop.add(() => callback(this, this.raw.position.x, this.raw.position.y));
+	}
 }

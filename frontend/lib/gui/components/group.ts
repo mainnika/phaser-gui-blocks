@@ -30,4 +30,9 @@ class Group extends Component {
 
 		gui.preload(game, this.content, gui);
 	}
+
+	public debug(gui: Gui, callback: (...args: any[]) => void): void {
+
+		gui.debug(this.content || []);
+	}
 }
