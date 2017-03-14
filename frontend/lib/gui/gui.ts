@@ -32,7 +32,7 @@ class Gui extends Phaser.State {
 
 	public create(): void {
 
-		new Group(this.root).compile(this);
+		new Group({ content: this.root }).compile(this);
 	}
 
 	public update(game?: Phaser.Game, components?: Component[], gui?: Gui): void {

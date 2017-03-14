@@ -1,19 +1,23 @@
 'use strict';
 
 import { Gui } from '../gui';
-import { Component } from './component';
+import { Component, IComponent } from './component';
 
-export { Group }
+export { Group, IGroup }
+
+interface IGroup extends IComponent {
+	content: Component[];
+}
 
 class Group extends Component {
 
 	private raw: Phaser.Group;
 
 	public constructor(
-		private content: Component[],
+		private group: IGroup,
 	) {
 
-		super(content);
+		super(group);
 	}
 
 	public get Raw(): Phaser.Group {
@@ -23,12 +27,12 @@ class Group extends Component {
 
 	public compile(gui: Gui, parent?: Phaser.Group, root?: Gui | Component): void {
 
-		gui.compile(this.content, this.raw = gui.add.group(parent), root || gui);
+		gui.compile(this.group.content, this.raw = gui.add.group(parent), root || gui);
 	}
 
 	public preload(gui: Gui, game: Phaser.Game): void {
 
-		gui.preload(game, this.content, gui);
+		gui.preload(game, this.group.content, gui);
 	}
 
 	public update(gui: Gui, game: Phaser.Game): void {
@@ -38,6 +42,6 @@ class Group extends Component {
 
 	public debug(gui: Gui, callback: (...args: any[]) => void): void {
 
-		gui.debug(this.content || []);
+		gui.debug(this.group.content);
 	}
 }
