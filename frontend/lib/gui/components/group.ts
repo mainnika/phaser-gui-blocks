@@ -33,4 +33,11 @@ class Group extends Component {
 			gui.compile(this.group.include, this.raw);
 		}
 	}
+
+	public load(gui: Gui, game: Phaser.Game): void {
+
+		if (Array.isArray(this.group.include)) {
+			gui.preload(game, this.group.include, gui);
+		}
+	}
 }

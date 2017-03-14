@@ -1,6 +1,5 @@
 'use strict';
 
-import { Preload } from './preload';
 import { Component, Group } from './components';
 
 export { Gui };
@@ -10,7 +9,6 @@ class Gui extends Phaser.State {
 	private raws: { [id: string]: Component };
 
 	constructor(
-		private preloads: Preload[],
 		private skeleton: Component[],
 	) {
 
@@ -20,10 +18,10 @@ class Gui extends Phaser.State {
 		this.raws = Object.create(null);
 	}
 
-	public preload(): void {
+	public preload(game?: Phaser.Game, components?: Component[], gui?: Gui): void {
 
-		for (const preloader of this.preloads) {
-			preloader.preload(this);
+		for (let component of components || this.skeleton) {
+			component.load(gui || this, game || this.game);
 		}
 	}
 

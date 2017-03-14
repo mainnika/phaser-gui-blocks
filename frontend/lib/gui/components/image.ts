@@ -35,4 +35,9 @@ class Image extends Component {
 
 		parent.add(this.raw = gui.add.image(this.image.x, this.image.y, key));
 	}
+
+	public load(gui: Gui, game: Phaser.Game): void {
+
+		game.load.image(this.image.url, this.image.url);
+	}
 }

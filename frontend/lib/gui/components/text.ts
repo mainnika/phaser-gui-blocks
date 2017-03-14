@@ -36,4 +36,9 @@ class Text extends Component {
 
 		parent.add(this.raw = gui.add.text(this.text.x, this.text.y, this.text.text, this.text.style));
 	}
+
+	public load(gui: Gui, game: Phaser.Game): void {
+
+		// nothing
+	}
 }

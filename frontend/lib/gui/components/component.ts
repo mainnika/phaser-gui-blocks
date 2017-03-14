@@ -25,4 +25,5 @@ abstract class Component {
 	public abstract get Raw(): any;
 
 	public abstract create(gui: Gui, parent: Phaser.Group): void;
+	public abstract load(gui: Gui, game: Phaser.Game): void;
 }
