@@ -1,6 +1,31 @@
 'use strict';
 
-export { IComponent, State, Type }
+import { Preload } from './preload';
+
+export { IComponent, IButton, IGroup, Type, State }
+
+interface IComponent {
+	type: Type | string;
+	id?: string;
+}
+
+interface IButton extends IComponent {
+	type: Type.Button | 'Button';
+	x?: number;
+	y?: number;
+	url?: string;
+	click?: Function;
+	ctx?: Object;
+}
+
+interface IGroup extends IComponent {
+	type: Type.Group | 'Group';
+	include?: Component[];
+}
+
+type Component =
+	| IButton
+	| IGroup;
 
 enum Type {
 	Button,
@@ -8,33 +33,27 @@ enum Type {
 	Group,
 }
 
-interface IComponent {
-	type: Type | string;
-	id?: string;
-	x?: number;
-	y?: number;
-	key?: string;
-	click?: Function;
-	include?: IComponent[];
-}
-
 class State extends Phaser.State {
 
-	private skeleton: IComponent[];
+	private skeleton: Component[];
+	private preloads: Preload[];
 	private root: Phaser.Group;
 	private raws: { [key: string]: any };
 
-	constructor(skeleton: IComponent[]) {
+	constructor(preloads: Preload[], skeleton: Component[]) {
 
 		super();
 
+		this.preloads = preloads;
 		this.skeleton = skeleton;
 		this.raws = {};
 	}
 
 	public preload(): void {
 
-		this.load.spritesheet('btn_blue_simple', '../img/controls/buttons/btn_blue_simple.png', 220, 102, 3);
+		for (const preloader of this.preloads) {
+			preloader.preload(this);
+		}
 	}
 
 	public create(): void {
@@ -47,7 +66,7 @@ class State extends Phaser.State {
 		//
 	}
 
-	private compiler(components: IComponent[], parent: Phaser.Group): any {
+	private compiler(components: Component[], parent: Phaser.Group): void {
 
 		for (let component of components) {
 
@@ -55,12 +74,12 @@ class State extends Phaser.State {
 
 				case Type.Group:
 				case Type[Type.Group]:
-					this.group(component, parent);
+					this.group(component as IGroup, parent);
 					break;
 
 				case Type.Button:
 				case Type[Type.Button]:
-					this.button(component, parent);
+					this.button(component as IButton, parent);
 					break;
 
 				default:
@@ -69,7 +88,7 @@ class State extends Phaser.State {
 		}
 	}
 
-	private group(group: IComponent, parent: Phaser.Group): Phaser.Group {
+	private group(group: IGroup, parent: Phaser.Group): Phaser.Group {
 
 		const id: string = group.id || String(Math.random());
 
@@ -88,11 +107,11 @@ class State extends Phaser.State {
 		return element;
 	}
 
-	private button(button: IComponent, parent: Phaser.Group): Phaser.Button {
+	private button(button: IButton, parent: Phaser.Group): Phaser.Button {
 
-		const handler: Function | undefined = button.click ? this.createHandler(button.click) : undefined;
+		const handler: Function | undefined = button.click ? this.createHandler(button.click, button.ctx) : undefined;
 		const id: string = button.id || String(Math.random());
-		const key: string = button.key || id;
+		const key: string = button.url || id;
 
 		if (this.raws[id]) {
 			throw new Error(`couldnt compile gui, element already exists, ${id}`);
@@ -105,9 +124,9 @@ class State extends Phaser.State {
 		return element;
 	}
 
-	private createHandler(fn: Function): Function {
+	private createHandler(fn: Function, ctx: Object): Function {
 
-		const self: State = this;
+		const self: Object = ctx || this;
 
 		return function (): void {
 			fn.apply(self, arguments);
