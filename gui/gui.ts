@@ -7,9 +7,9 @@ import { Component, Group } from './components';
 
 export { Gui };
 
-class Gui extends Phaser.State {
+const D: debug.IDebugger = configureDebug(debug)('Gui');
 
-	private static D: debug.IDebugger = configureDebug(debug)('Gui');
+class Gui extends Phaser.State {
 
 	private raws: { [id: string]: Component };
 
@@ -53,7 +53,7 @@ class Gui extends Phaser.State {
 	public debug(components?: Component[]): void {
 
 		for (let component of components || this.root) {
-			component.debug(this, (...args: any[]): void => Gui.D(`Debug component %o`, args));
+			component.debug(this, (...args: any[]): void => D(`Debug component %o`, args));
 		}
 	}
 }
