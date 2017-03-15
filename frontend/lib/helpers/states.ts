@@ -1,14 +1,14 @@
 'use strict';
 
-export { StateMachine, IStateMachineRules }
+export { States, IStatesRules }
 
-interface IStateMachineRules<T, E> {
+interface IStatesRules<T, E> {
 	from: T;
 	to: T;
 	raise: E;
 }
 
-class StateMachine<T, E> {
+class States<T, E> {
 
 	private current: T;
 	private rules: any;
@@ -16,7 +16,7 @@ class StateMachine<T, E> {
 
 	public constructor(
 		initial: T,
-		rules: IStateMachineRules<T, E>[],
+		rules: IStatesRules<T, E>[],
 		resolver: (event: E) => void,
 	) {
 
