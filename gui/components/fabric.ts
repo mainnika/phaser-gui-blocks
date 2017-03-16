@@ -33,7 +33,6 @@ class Fabric<T extends Component> extends Component {
 
 		let constructed: T = new templateCtr(templateProps);
 
-		constructed.preload(this.gui, this.game);
 		constructed.compile(this.gui, this.parent, this.root);
 
 		this.constructed.push(constructed);
