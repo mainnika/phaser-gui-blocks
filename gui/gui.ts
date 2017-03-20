@@ -3,7 +3,7 @@
 import * as debug from 'debug';
 import { defer, Deferred } from 'when';
 
-import { configureDebug } from '../helpers/configureDebug';
+import { configureDebug } from '../helpers/configure-debug';
 import { Component, Group } from './components';
 
 export { Gui };

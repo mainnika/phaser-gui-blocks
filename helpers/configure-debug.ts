@@ -44,13 +44,11 @@ const customFormatArgsFactory = (debugModule: debug.IDebug): (...args: any[]) =>
 
 const configureDebug = (debugModule: debug.IDebug): debug.IDebug => {
 
-	// tslint:disable-next-line:no-string-literal
-	if (debugModule['formatArgs'] && debugModule['formatArgs'].customized) {
-		return;
+	// tslint:disable:no-string-literal
+	if (!(debugModule['formatArgs'] && debugModule['formatArgs'].customized)) {
+		debugModule['formatArgs'] = customFormatArgsFactory(debugModule);
 	}
-
-	// tslint:disable-next-line:no-string-literal
-	debugModule['formatArgs'] = customFormatArgsFactory(debugModule);
+	// tslint:enable:no-string-literal
 
 	return debugModule;
 };
