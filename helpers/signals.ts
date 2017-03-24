@@ -17,6 +17,12 @@ class Signals<E> {
 		signal.add(cb);
 	}
 
+	public once(event: E, cb: Function): void {
+
+		const signal: Phaser.Signal = this.signals[event as any] = this.signals[event as any] || new Phaser.Signal();
+		signal.addOnce(cb);
+	}
+
 	public emit(event: E, ...args: any[]): void {
 
 		const signal: Phaser.Signal = this.signals[event as any];

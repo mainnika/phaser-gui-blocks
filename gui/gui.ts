@@ -1,12 +1,17 @@
 'use strict';
 
 import * as debug from 'debug';
-import { defer, Deferred } from 'when';
 
 import { configureDebug } from '../helpers/configure-debug';
+import { Signals } from '../helpers/signals';
 import { Component, Group } from './components';
 
-export { Gui };
+export { Gui, GuiEvent };
+
+enum GuiEvent {
+	Preloaded,
+	Created,
+}
 
 const D: debug.IDebugger = configureDebug(debug)('Gui');
 
@@ -14,8 +19,7 @@ class Gui extends Phaser.State {
 
 	private raws: { [id: string]: Component };
 
-	private whenPreload: Deferred<void>;
-	private whenCreate: Deferred<void>;
+	private events: Signals<GuiEvent>;
 
 	private isPreloaded: boolean;
 	private isCreated: boolean;
@@ -28,18 +32,12 @@ class Gui extends Phaser.State {
 
 		// tslint:disable-next-line:no-null-keyword
 		this.raws = Object.create(null);
-		this.whenCreate = defer<void>();
-		this.whenPreload = defer<void>();
+		this.events = new Signals<GuiEvent>();
 	}
 
-	public get WhenPreload(): Promise<void> {
+	public get Events(): Signals<GuiEvent> {
 
-		return this.whenPreload.promise;
-	}
-
-	public get WhenCreate(): Promise<void> {
-
-		return this.whenCreate.promise;
+		return this.events;
 	}
 
 	public get IsPreloaded(): boolean {
@@ -67,7 +65,7 @@ class Gui extends Phaser.State {
 		}
 
 		this.isPreloaded = true;
-		this.whenPreload.resolve();
+		this.events.emit(GuiEvent.Preloaded);
 	}
 
 	public create(): void {
@@ -75,7 +73,7 @@ class Gui extends Phaser.State {
 		new Group({ content: this.root }).compile(this);
 
 		this.isCreated = true;
-		this.whenCreate.resolve();
+		this.events.emit(GuiEvent.Created);
 	}
 
 	public update(game?: Phaser.Game, components?: Component[], gui?: Gui): void {
