@@ -35,7 +35,7 @@ class Gui extends Phaser.State {
 		this.events = new Signals<GuiEvent>();
 	}
 
-	public get Events(): Signals<GuiEvent> {
+	public get GuiEvents(): Signals<GuiEvent> {
 
 		return this.events;
 	}
