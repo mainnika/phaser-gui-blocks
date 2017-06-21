@@ -34,6 +34,17 @@ class Text extends Component {
 		return this.raw;
 	}
 
+	public get Text(): string {
+
+		return this.text.text;
+	}
+
+	public set Text(text: string) {
+
+		this.text.text = text;
+		this.raw.setText(text);
+	}
+
 	public compile(gui: Gui, parent: Phaser.Group, root?: Gui | Component): void {
 
 		parent.add(this.raw = gui.add.text(this.text.x, this.text.y, this.text.text, this.text.style));
