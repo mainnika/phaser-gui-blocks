@@ -11,6 +11,7 @@ interface IImage {
 	url?: string;
 	click?: Function;
 	ctx?: Object;
+	input?: boolean;
 }
 
 class Image extends Component {
@@ -34,6 +35,7 @@ class Image extends Component {
 		const key: string = this.image.url;
 
 		parent.add(this.raw = gui.add.image(this.image.x, this.image.y, key));
+		this.raw.inputEnabled = !!this.image.input;
 	}
 
 	public preload(gui: Gui, game: Phaser.Game): void {
