@@ -1,9 +1,9 @@
 'use strict';
 
 import { Gui } from '../gui';
-import { Component } from './component';
+import { Component, IComponent } from './component';
 
-interface IImage {
+interface IImage extends IComponent {
 	ctx?: {};
 	url?: string;
 	x?: number;

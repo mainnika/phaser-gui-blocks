@@ -1,9 +1,9 @@
 'use strict';
 
 import { Gui } from '../gui';
-import { Component } from './component';
+import { Component, IComponent } from './component';
 
-interface IText {
+interface IText extends IComponent {
 	style?: {
 		align?: string;
 		boundsAlignH?: string;
