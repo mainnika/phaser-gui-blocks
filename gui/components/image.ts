@@ -3,15 +3,19 @@
 import { Gui } from '../gui';
 import { Component } from './component';
 
-export { Image, IImage }
-
 interface IImage {
+	ctx?: {};
+	url?: string;
 	x?: number;
 	y?: number;
+<<<<<<< HEAD:gui/components/image.ts
 	url?: string;
 	click?: Function;
 	ctx?: Object;
 	input?: boolean;
+=======
+	click?(): void;
+>>>>>>> c02e76e... frontend tslint fixes:frontend/lib/gui/components/image.ts
 }
 
 class Image extends Component {
@@ -38,6 +42,14 @@ class Image extends Component {
 		this.raw.inputEnabled = !!this.image.input;
 	}
 
+	public debug(gui: Gui, callback: (...args: {}[]) => void): void {
+
+		this.raw.inputEnabled = true;
+		this.raw.input.enableDrag(false);
+
+		this.raw.events.onDragStop.add(() => callback(this, this.raw.position.x, this.raw.position.y));
+	}
+
 	public preload(gui: Gui, game: Phaser.Game): void {
 
 		game.load.image(this.image.url, this.image.url);
@@ -46,12 +58,6 @@ class Image extends Component {
 	public update(gui: Gui, game: Phaser.Game): void {
 		//
 	}
-
-	public debug(gui: Gui, callback: (...args: any[]) => void): void {
-
-		this.raw.inputEnabled = true;
-		this.raw.input.enableDrag(false);
-
-		this.raw.events.onDragStop.add(() => callback(this, this.raw.position.x, this.raw.position.y));
-	}
 }
+
+export { Image, IImage };

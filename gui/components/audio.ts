@@ -3,8 +3,6 @@
 import { Gui } from '../gui';
 import { Component } from './component';
 
-export { Audio, IAudio }
-
 interface IAudio {
 	url?: string;
 }
@@ -32,6 +30,10 @@ class Audio extends Component {
 		this.raw = gui.add.audio(key);
 	}
 
+	public debug(gui: Gui, callback: (...args: {}[]) => void): void {
+		//
+	}
+
 	public preload(gui: Gui, game: Phaser.Game): void {
 
 		game.load.audio(this.audio.url, this.audio.url);
@@ -40,8 +42,6 @@ class Audio extends Component {
 	public update(gui: Gui, game: Phaser.Game): void {
 		//
 	}
-
-	public debug(gui: Gui, callback: (...args: any[]) => void): void {
-		//
-	}
 }
+
+export { Audio, IAudio };

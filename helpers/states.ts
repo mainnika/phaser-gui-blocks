@@ -1,18 +1,19 @@
+// tslint:disable:no-any
 'use strict';
 
-export { States, IStatesRules }
+export { States, IStatesRules };
 
 interface IStatesRules<T, E> {
 	from: T;
-	to: T;
 	raise: E;
+	to: T;
 }
 
 class States<T, E> {
 
 	private current: T;
-	private rules: any;
 	private resolver: (event: E) => void;
+	private rules: any;
 
 	public constructor(
 		initial: T,
@@ -25,7 +26,7 @@ class States<T, E> {
 		this.rules = {};
 
 		for (const rule of rules) {
-			let transitions: any = this.rules[rule.from] = this.rules[rule.from] ? this.rules[rule.from] : {};
+			const transitions: any = this.rules[rule.from] = this.rules[rule.from] ? this.rules[rule.from] : {};
 			transitions[rule.to] = transitions[rule.to] ? transitions[rule.to] : rule.raise;
 		}
 	}

@@ -1,6 +1,5 @@
+// tslint:disable:no-any
 'use strict';
-
-export { Signals }
 
 class Signals<E> {
 
@@ -9,18 +8,6 @@ class Signals<E> {
 	public constructor() {
 
 		this.signals = {};
-	}
-
-	public on(event: E, cb: Function): void {
-
-		const signal: Phaser.Signal = this.signals[event as any] = this.signals[event as any] || new Phaser.Signal();
-		signal.add(cb);
-	}
-
-	public once(event: E, cb: Function): void {
-
-		const signal: Phaser.Signal = this.signals[event as any] = this.signals[event as any] || new Phaser.Signal();
-		signal.addOnce(cb);
 	}
 
 	public emit(event: E, ...args: any[]): void {
@@ -33,4 +20,20 @@ class Signals<E> {
 
 		signal.dispatch(...args);
 	}
+
+	// tslint:disable-next-line:ban-types
+	public on(event: E, cb: Function): void {
+
+		const signal: Phaser.Signal = this.signals[event as any] = this.signals[event as any] || new Phaser.Signal();
+		signal.add(cb);
+	}
+
+	// tslint:disable-next-line:ban-types
+	public once(event: E, cb: Function): void {
+
+		const signal: Phaser.Signal = this.signals[event as any] = this.signals[event as any] || new Phaser.Signal();
+		signal.addOnce(cb);
+	}
 }
+
+export { Signals };

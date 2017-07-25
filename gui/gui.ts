@@ -6,8 +6,6 @@ import { configureDebug } from '../helpers/configure-debug';
 import { Signals } from '../helpers/signals';
 import { Component, Group } from './components';
 
-export { Gui, GuiEvent };
-
 enum GuiEvent {
 	Preloaded,
 	Created,
@@ -17,12 +15,10 @@ const D: debug.IDebugger = configureDebug(debug)('Gui');
 
 class Gui extends Phaser.State {
 
-	private raws: { [id: string]: Component };
-
 	private events: Signals<GuiEvent>;
-
-	private isPreloaded: boolean;
 	private isCreated: boolean;
+	private isPreloaded: boolean;
+	private raws: { [id: string]: Component };
 
 	public constructor(
 		private root: Component[],
@@ -50,13 +46,36 @@ class Gui extends Phaser.State {
 		return this.isCreated;
 	}
 
+	public compile(components: Component[], parent: Phaser.Group, root: Gui | Component): void {
+
+		for (const component of components) {
+			component.compile(this, parent, root);
+			this.raws[component.Id || String(Math.random())] = component;
+		}
+	}
+
+	public create(): void {
+
+		new Group({ content: this.root }).compile(this);
+
+		this.isCreated = true;
+		this.events.emit(GuiEvent.Created);
+	}
+
+	public debug(components?: Component[]): void {
+
+		for (const component of components || this.root) {
+			component.debug(this, (...args: {}[]): void => D(`Debug component %o`, args));
+		}
+	}
+
 	public preload(game?: Phaser.Game, components?: Component[], gui?: Gui): void {
 
 		if (this.isPreloaded) {
 			return;
 		}
 
-		for (let component of components || this.root) {
+		for (const component of components || this.root) {
 			component.preload(gui || this, game || this.game);
 		}
 
@@ -68,33 +87,12 @@ class Gui extends Phaser.State {
 		this.events.emit(GuiEvent.Preloaded);
 	}
 
-	public create(): void {
-
-		new Group({ content: this.root }).compile(this);
-
-		this.isCreated = true;
-		this.events.emit(GuiEvent.Created);
-	}
-
 	public update(game?: Phaser.Game, components?: Component[], gui?: Gui): void {
 
-		for (let component of components || this.root) {
+		for (const component of components || this.root) {
 			component.update(gui || this, game || this.game);
 		}
 	}
-
-	public compile(components: Component[], parent: Phaser.Group, root: Gui | Component): void {
-
-		for (let component of components) {
-			component.compile(this, parent, root);
-			this.raws[component.Id || String(Math.random())] = component;
-		}
-	}
-
-	public debug(components?: Component[]): void {
-
-		for (let component of components || this.root) {
-			component.debug(this, (...args: any[]): void => D(`Debug component %o`, args));
-		}
-	}
 }
+
+export { Gui, GuiEvent };

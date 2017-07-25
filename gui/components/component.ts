@@ -2,8 +2,6 @@
 
 import { Gui } from '../gui';
 
-export { Component, IComponent };
-
 interface IComponent {
 	id?: string;
 }
@@ -25,10 +23,12 @@ abstract class Component {
 		return this.component;
 	}
 
-	public abstract get Raw(): any;
+	public abstract get Raw(): {};
 
 	public abstract compile(gui: Gui, parent: Phaser.Group, root: Gui | Component): void;
+	public abstract debug(gui: Gui, callback: (...args: {}[]) => void): void;
 	public abstract preload(gui: Gui, game: Phaser.Game): void;
 	public abstract update(gui: Gui, game: Phaser.Game): void;
-	public abstract debug(gui: Gui, callback: (...args: any[]) => void): void;
 }
+
+export { Component, IComponent };

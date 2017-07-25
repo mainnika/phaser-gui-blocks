@@ -1,9 +1,7 @@
 'use strict';
 
-import { Gui } from '../gui';
 import { Component, IComponent } from '../components';
-
-export { Fabric, IFabric };
+import { Gui } from '../gui';
 
 interface IFabric<T> extends IComponent {
 	template: T;
@@ -11,11 +9,11 @@ interface IFabric<T> extends IComponent {
 
 class Fabric<T extends Component> extends Component {
 
-	private gui: Gui;
+	private constructed: T[];
 	private game: Phaser.Game;
+	private gui: Gui;
 	private parent: Phaser.Group;
 	private root: Gui | Fabric<T>;
-	private constructed: T[];
 
 	public constructor(
 		private fabric: IFabric<T>,
@@ -27,11 +25,13 @@ class Fabric<T extends Component> extends Component {
 
 	public get New(): T {
 
-		let template: T = this.fabric.template;
-		let templateCtr: any = (template as Object).constructor;
-		let templateProps: any = Phaser.Utils.extend(true, {}, template.Component);
+		const template: T = this.fabric.template;
+		const templateProps: {} = Phaser.Utils.extend(true, {}, template.Component);
 
-		let constructed: T = new templateCtr(templateProps);
+		// tslint:disable-next-line:ban-types
+		const templateCtr: { new (props?: {}): T } = (template as Object).constructor as { new (props?: {}): T };
+
+		const constructed: T = new templateCtr(templateProps);
 
 		constructed.compile(this.gui, this.parent, this.root);
 
@@ -52,18 +52,20 @@ class Fabric<T extends Component> extends Component {
 		this.root = root;
 	}
 
+	public debug(gui: Gui, callback: (...args: {}[]) => void): void {
+		//
+	}
+
 	public preload(gui: Gui, game: Phaser.Game): void {
 
 		this.game = game;
 		this.fabric.template.preload(gui, game);
-	};
+	}
 
 	public update(gui: Gui, game: Phaser.Game): void {
 
 		gui.update(game, this.constructed);
 	}
-
-	public debug(gui: Gui, callback: (...args: any[]) => void): void {
-		//
-	};
 }
+
+export { Fabric, IFabric };

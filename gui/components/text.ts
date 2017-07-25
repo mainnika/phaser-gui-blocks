@@ -3,19 +3,17 @@
 import { Gui } from '../gui';
 import { Component } from './component';
 
-export { Text, IText }
-
 interface IText {
-	x?: number;
-	y?: number;
-	text?: string;
 	style?: {
-		font?: string;
-		fill?: string;
 		align?: string;
 		boundsAlignH?: string;
 		boundsAlignV?: string;
+		fill?: string;
+		font?: string;
 	};
+	text?: string;
+	x?: number;
+	y?: number;
 }
 
 class Text extends Component {
@@ -50,19 +48,21 @@ class Text extends Component {
 		parent.add(this.raw = gui.add.text(this.text.x, this.text.y, this.text.text, this.text.style));
 	}
 
-	public preload(gui: Gui, game: Phaser.Game): void {
-		// nothing
-	}
-
-	public update(gui: Gui, game: Phaser.Game): void {
-		//
-	}
-
-	public debug(gui: Gui, callback: (...args: any[]) => void): void {
+	public debug(gui: Gui, callback: (...args: {}[]) => void): void {
 
 		this.raw.inputEnabled = true;
 		this.raw.input.enableDrag(false);
 
 		this.raw.events.onDragStop.add(() => callback(this, this.raw.position.x, this.raw.position.y));
 	}
+
+	public preload(gui: Gui, game: Phaser.Game): void {
+		//
+	}
+
+	public update(gui: Gui, game: Phaser.Game): void {
+		//
+	}
 }
+
+export { Text, IText };
