@@ -5,9 +5,13 @@ import { Component } from './component';
 
 class Modal extends Component {
 
+	public static readonly SHADOW_COLOR: number = 0x7F7679;
+	public static readonly TRANSPARENCY: number = 0.75;
+
 	private owner: Gui;
 	private raw: Phaser.Group;
 	private visible: boolean;
+	private shadow: Phaser.Graphics;
 
 	public constructor(
 		private content: Component[],
@@ -53,6 +57,13 @@ class Modal extends Component {
 			this.hide();
 		}
 
+		this.shadow = this.owner.add.graphics(0, 0);
+		this.shadow.inputEnabled = true;
+		this.shadow.beginFill(Modal.SHADOW_COLOR, Modal.TRANSPARENCY);
+		this.shadow.drawRect(0, 0, this.owner.game.width, this.owner.game.height);
+		this.shadow.endFill();
+
+		this.raw.addChild(this.shadow);
 		this.owner.compile(this.content, this.raw, this);
 		this.visible = true;
 	}
