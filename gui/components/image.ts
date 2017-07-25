@@ -4,8 +4,6 @@ import { Gui } from '../gui';
 import { Component, IComponent } from './component';
 
 interface IImage extends IComponent {
-	ctx?: {};
-	frame?: string | number;
 	atlas?: string;
 	url?: string;
 <<<<<<< HEAD:gui/components/image.ts
@@ -18,11 +16,16 @@ interface IImage extends IComponent {
 =======
 	x: number;
 	y: number;
+<<<<<<< HEAD:gui/components/image.ts
 >>>>>>> ab59d2d... add texture atlas:frontend/lib/gui/components/image.ts
 	input?: boolean;
 =======
 	click?(): void;
 >>>>>>> c02e76e... frontend tslint fixes:frontend/lib/gui/components/image.ts
+=======
+	frame?: string | number;
+	input?: boolean;
+>>>>>>> 7bdcf14... gui typo fixes:frontend/lib/gui/components/image.ts
 }
 
 class Image extends Component {

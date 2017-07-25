@@ -4,18 +4,18 @@ import { Gui } from '../gui';
 import { Component, IComponent } from './component';
 
 interface IButton extends IComponent {
-	ctx?: {};
 	frames: {
 		out: string | number;
 		over: string | number;
 		down: string | number;
 	};
-	height?: number;
 	atlas?: string;
 	url?: string;
+	height?: number;
 	width?: number;
 	x: number;
 	y: number;
+	ctx?: {};
 	click?(): void;
 }
 

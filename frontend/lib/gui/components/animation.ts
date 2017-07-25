@@ -72,7 +72,7 @@ class Animation extends Component {
 			return;
 		}
 
-		game.load.image(this.animation.url, this.animation.url);
+		game.load.spritesheet(this.animation.url, this.animation.url, this.animation.width, this.animation.height, this.animation.max);
 	}
 
 	public update(gui: Gui, game: Phaser.Game): void {
