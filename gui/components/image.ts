@@ -5,13 +5,20 @@ import { Component, IComponent } from './component';
 
 interface IImage extends IComponent {
 	ctx?: {};
+	frame?: string | number;
+	atlas?: string;
 	url?: string;
+<<<<<<< HEAD:gui/components/image.ts
 	x?: number;
 	y?: number;
 <<<<<<< HEAD:gui/components/image.ts
 	url?: string;
 	click?: Function;
 	ctx?: Object;
+=======
+	x: number;
+	y: number;
+>>>>>>> ab59d2d... add texture atlas:frontend/lib/gui/components/image.ts
 	input?: boolean;
 =======
 	click?(): void;
@@ -36,9 +43,10 @@ class Image extends Component {
 
 	public compile(gui: Gui, parent: Phaser.Group, root?: Gui | Component): void {
 
-		const key: string = this.image.url;
+		const key: string = this.image.atlas || this.image.url;
+		const frame: string | number = this.image.frame;
 
-		parent.add(this.raw = gui.add.image(this.image.x, this.image.y, key));
+		parent.add(this.raw = gui.add.image(this.image.x, this.image.y, key, frame));
 		this.raw.inputEnabled = !!this.image.input;
 	}
 
@@ -51,6 +59,10 @@ class Image extends Component {
 	}
 
 	public preload(gui: Gui, game: Phaser.Game): void {
+
+		if (this.image.atlas) {
+			return;
+		}
 
 		game.load.image(this.image.url, this.image.url);
 	}

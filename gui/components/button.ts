@@ -5,20 +5,23 @@ import { Component, IComponent } from './component';
 
 interface IButton extends IComponent {
 	ctx?: {};
+	frames: {
+		out: string | number;
+		over: string | number;
+		down: string | number;
+	};
 	height?: number;
+	atlas?: string;
 	url?: string;
 	width?: number;
-	x?: number;
-	y?: number;
+	x: number;
+	y: number;
 	click?(): void;
 }
 
 class Button extends Component {
 
-	public static readonly DOWN_FRAME: number = 2;
-	public static readonly FRAMES: number = 3;
-	public static readonly OUT_FRAME: number = 0;
-	public static readonly OVER_FRAME: number = 1;
+	private static readonly FRAMES: number = 3;
 
 	private raw: Phaser.Button;
 
@@ -37,9 +40,18 @@ class Button extends Component {
 	public compile(gui: Gui, parent: Phaser.Group, root: Gui | Component): void {
 
 		const handler: () => void | undefined = this.button.click ? this.button.click.bind(this.button.ctx || root) : undefined;
-		const key: string = this.button.url;
+		const key: string = this.button.atlas || this.button.url;
 
-		parent.add(this.raw = gui.add.button(this.button.x, this.button.y, key, handler, undefined, Button.OVER_FRAME, Button.OUT_FRAME, Button.DOWN_FRAME, 0));
+		parent.add(this.raw = gui.add.button(
+			this.button.x,
+			this.button.y,
+			key,
+			handler,
+			undefined,
+			this.button.frames.over,
+			this.button.frames.out,
+			this.button.frames.down,
+		));
 	}
 
 	public debug(gui: Gui, callback: (...args: {}[]) => void): void {
@@ -53,6 +65,10 @@ class Button extends Component {
 	}
 
 	public preload(gui: Gui, game: Phaser.Game): void {
+
+		if (this.button.atlas) {
+			return;
+		}
 
 		game.load.spritesheet(this.button.url, this.button.url, this.button.width, this.button.height, Button.FRAMES);
 	}
