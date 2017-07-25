@@ -3,7 +3,14 @@
 import { Gui } from '../gui';
 import { Component, IComponent } from './component';
 
+enum TextAlign {
+	Left,
+	Center,
+	Right,
+}
+
 interface IText extends IComponent {
+	aligh?: TextAlign;
 	style?: {
 		align?: string;
 		boundsAlignH?: string;
@@ -51,6 +58,16 @@ class Text extends Component {
 	public compile(gui: Gui, parent: Phaser.Group, root?: Gui | Component): void {
 
 		parent.add(this.raw = gui.add.text(this.text.x, this.text.y, this.text.text, this.text.style));
+
+		switch (this.text.aligh) {
+			case TextAlign.Right:
+				this.raw.anchor.setTo(1, 0);
+				break;
+			case TextAlign.Center:
+				this.raw.anchor.setTo(Component.MIDDLE, 0);
+				break;
+			default:
+		}
 	}
 
 	public debug(gui: Gui, callback: (...args: {}[]) => void): void {
@@ -70,4 +87,4 @@ class Text extends Component {
 	}
 }
 
-export { Text, IText };
+export { Text, IText, TextAlign };
