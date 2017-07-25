@@ -45,15 +45,19 @@ class Animation extends Component {
 		parent.add(this.raw = gui.add.sprite(this.animation.x, this.animation.y, key));
 
 		this.raw.visible = false;
-		this.raw.animations.add('default', this.animation.frames, Animation.FRAME_RATE)
-			.onComplete.add(() => this.raw.visible = false);
+		this.raw.animations.add('default', this.animation.frames, Animation.FRAME_RATE);
 	}
 
-	public play(): void {
+	public play(): Promise<void> {
 
-		this.raw.position.setTo(this.animation.x, this.animation.y);
-		this.raw.visible = true;
-		this.raw.animations.play('default');
+		return new Promise((resolve: () => void): void => {
+
+			this.raw.position.setTo(this.animation.x, this.animation.y);
+			this.raw.visible = true;
+			this.raw.animations
+				.play('default')
+				.onComplete.addOnce(() => (resolve(), this.raw.visible = false));
+		});
 	}
 
 	public debug(gui: Gui, callback: (...args: {}[]) => void): void {
