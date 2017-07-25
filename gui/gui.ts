@@ -46,7 +46,7 @@ class Gui extends Phaser.State {
 		return this.isCreated;
 	}
 
-	public compile(components: Component[], parent: Phaser.Group, root: Gui | Component): void {
+	public compile(components: Component[], parent: Phaser.Group | Phaser.Sprite, root: Gui | Component): void {
 
 		for (const component of components) {
 			component.compile(this, parent, root);

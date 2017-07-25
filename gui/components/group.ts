@@ -23,7 +23,7 @@ class Group extends Component {
 		return this.raw;
 	}
 
-	public compile(gui: Gui, parent?: Phaser.Group, root?: Gui | Component): void {
+	public compile(gui: Gui, parent?: Phaser.Group | Phaser.Sprite, root?: Gui | Component): void {
 
 		gui.compile(this.group.content, this.raw = gui.add.group(parent), root || gui);
 	}
