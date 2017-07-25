@@ -40,6 +40,11 @@ class Text extends Component {
 	public set Text(text: string) {
 
 		this.text.text = text;
+
+		if (!this.raw) {
+			return;
+		}
+
 		this.raw.setText(text);
 	}
 
