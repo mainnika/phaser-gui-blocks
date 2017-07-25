@@ -8,6 +8,8 @@ interface IComponent {
 
 abstract class Component {
 
+	public static readonly MIDDLE: number = 0.5;
+
 	public constructor(
 		private component: IComponent,
 	) {
