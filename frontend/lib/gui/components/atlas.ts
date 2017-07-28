@@ -22,8 +22,11 @@ class Atlas extends Component {
 		throw new Error('not impl');
 	}
 
-	public compile(gui: Gui, parent: Phaser.Group, root?: Gui | Component): void {
-		//
+	public compile(gui: Gui, parent: Phaser.Group, root: Gui | Component): void {
+
+		const preloaded: Phaser.Sprite = gui.add.sprite(-1, -1, this.atlas.url);
+		preloaded.width = 1;
+		preloaded.height = 1;
 	}
 
 	public debug(gui: Gui, callback: (...args: {}[]) => void): void {
